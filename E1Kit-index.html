@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E1 Kit™ — Sign In to Continue</title>
+<style>
+  /* ============================================================
+     E1 Kit — retro Y2K / Frutiger Aero style login-landing page
+     Fonts: Verdana/Tahoma stack, glossy aqua buttons, blue-sky bg,
+     bubble particles, marquee ticker, blinking badges, visitor
+     counter — all classic early-2000s web furniture.
+  ============================================================= */
+  html,body{
+    margin:0;padding:0;height:100%;
+    font-family:Verdana, Tahoma, Geneva, sans-serif;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(255,255,255,0.55) 0, rgba(255,255,255,0) 12%),
+      radial-gradient(circle at 80% 30%, rgba(255,255,255,0.4) 0, rgba(255,255,255,0) 10%),
+      linear-gradient(180deg,#bfe6ff 0%, #6fc3f7 30%, #1e88c7 65%, #0b5a8f 100%);
+    overflow-x:hidden;
+    color:#003a5c;
+  }
+
+  /* floating bubble particles, classic aero */
+  .bubble{
+    position:fixed;bottom:-80px;border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(255,255,255,0.05) 70%);
+    box-shadow:inset 0 0 8px rgba(255,255,255,0.8), 0 0 4px rgba(0,0,0,0.1);
+    animation:rise linear infinite;
+    pointer-events:none;
+    opacity:.75;
+  }
+  @keyframes rise{
+    0%{transform:translateY(0) translateX(0);}
+    100%{transform:translateY(-115vh) translateX(20px);}
+  }
+
+  header.topbar{
+    background:linear-gradient(180deg,#ffffff, #cfe9ff 40%, #8fc9ee);
+    border-bottom:3px solid #2b7fb8;
+    padding:6px 14px;
+    display:flex;align-items:center;justify-content:space-between;
+    box-shadow:0 2px 6px rgba(0,0,0,0.25);
+    position:relative;z-index:5;
+  }
+  .brand{
+    font-weight:bold;font-size:22px;color:#0b5a8f;
+    text-shadow:1px 1px 0 #fff, 0 0 6px rgba(255,255,255,0.8);
+    letter-spacing:1px;
+  }
+  .brand small{font-size:11px;display:block;color:#ff6600;font-weight:normal;}
+
+  marquee, .marquee-fallback{
+    background:#003a5c;color:#baf7ff;font-size:13px;padding:3px 0;
+    border-top:1px solid #6fc3f7;border-bottom:1px solid #001c2c;
+    letter-spacing:.5px;
+  }
+
+  .badge-new{
+    background:red;color:#fff;font-size:10px;font-weight:bold;
+    padding:2px 5px;border-radius:3px;margin-left:6px;
+    animation:blink 1s steps(2, start) infinite;
+    vertical-align:middle;
+  }
+  @keyframes blink{ to { visibility:hidden; } }
+
+  .stage{
+    display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;
+    gap:26px;padding:40px 16px 20px;position:relative;z-index:3;
+  }
+
+  /* the "login" panel — glossy aero window chrome */
+  .login-window{
+    width:360px;
+    background:linear-gradient(180deg,#f4fbff, #d7ecfb);
+    border:1px solid #7fb8de;
+    border-radius:10px;
+    box-shadow:0 10px 30px rgba(0,40,70,0.4), inset 0 0 0 1px rgba(255,255,255,0.6);
+    overflow:hidden;
+  }
+  .win-titlebar{
+    background:linear-gradient(180deg,#5fb6ee,#1c7fc0 55%,#0c5f97);
+    color:#fff;font-weight:bold;font-size:13px;
+    padding:6px 10px;display:flex;justify-content:space-between;align-items:center;
+    text-shadow:1px 1px 1px rgba(0,0,0,0.4);
+  }
+  .win-buttons span{
+    display:inline-block;width:16px;height:16px;margin-left:4px;border-radius:3px;
+    background:linear-gradient(180deg,#fff,#ccc);border:1px solid #888;
+    text-align:center;font-size:11px;line-height:14px;color:#333;
+  }
+  .win-body{padding:22px;text-align:center;}
+  .win-body img.logo-mark{width:70px;margin-bottom:8px;}
+  .field-row{margin:10px 0;text-align:left;}
+  .field-row label{font-size:12px;font-weight:bold;display:block;margin-bottom:3px;color:#0b5a8f;}
+  .field-row input{
+    width:100%;padding:7px 8px;font-size:13px;
+    border:1px solid #6fa8c9;border-radius:4px;
+    background:linear-gradient(180deg,#ffffff,#eef7fd);
+    box-shadow:inset 0 1px 3px rgba(0,0,0,0.15);
+  }
+  .remember-row{font-size:11px;text-align:left;margin:8px 0 14px;color:#444;}
+
+  .aero-btn{
+    display:inline-block;width:100%;padding:10px;
+    font-weight:bold;font-size:14px;color:#fff;
+    background:linear-gradient(180deg,#8fe0ff 0%, #29a8e0 45%, #0f7cbf 55%, #0a5f96 100%);
+    border:1px solid #0a5f96;border-radius:20px;
+    box-shadow:inset 0 1px 4px rgba(255,255,255,0.8), 0 3px 6px rgba(0,0,0,0.3);
+    cursor:pointer;text-shadow:1px 1px 1px rgba(0,0,0,0.35);
+    position:relative;overflow:hidden;
+  }
+  .aero-btn::after{
+    content:"";position:absolute;top:0;left:0;right:0;height:45%;
+    background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0));
+    border-radius:20px 20px 50% 50%;
+  }
+  .aero-btn:hover{filter:brightness(1.08);}
+  .aero-btn:active{transform:translateY(1px);}
+
+  .win-footer-links{margin-top:12px;font-size:11px;}
+  .win-footer-links a{color:#0b5a8f;text-decoration:underline;}
+
+  /* right side promo panel */
+  .promo-panel{
+    width:420px;
+    background:linear-gradient(180deg,#f4fbff,#d7ecfb);
+    border:1px solid #7fb8de;border-radius:10px;
+    box-shadow:0 10px 30px rgba(0,40,70,0.4), inset 0 0 0 1px rgba(255,255,255,0.6);
+    padding:20px;
+  }
+  .promo-panel h1{
+    font-size:22px;color:#0b5a8f;text-shadow:1px 1px 0 #fff;margin:4px 0 2px;
+  }
+  .promo-panel h2{font-size:13px;color:#ff6600;margin:0 0 12px;}
+  .feature-list{list-style:none;padding:0;margin:0 0 16px;font-size:13px;}
+  .feature-list li{
+    padding:6px 0 6px 26px;
+    background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><circle cx="8" cy="8" r="7" fill="%2329a8e0" stroke="%230a5f96"/></svg>') left center no-repeat;
+    border-bottom:1px dashed #a9d3ec;
+  }
+  .stat-strip{
+    display:flex;justify-content:space-between;background:#eaf6ff;
+    border:1px solid #b9dcf1;border-radius:6px;padding:8px;margin-bottom:14px;
+    font-size:11px;text-align:center;
+  }
+  .stat-strip div strong{display:block;font-size:16px;color:#0b5a8f;}
+
+  .visitor-counter{
+    font-family:'Courier New', monospace;background:#000;color:#0f0;
+    display:inline-block;padding:4px 8px;border:2px inset #444;
+    letter-spacing:2px;font-size:13px;
+  }
+
+  .guestbook-strip{
+    text-align:center;font-size:12px;padding:10px;color:#eaf9ff;
+    background:#0b5a8f;border-top:2px solid #003a5c;
+  }
+  .guestbook-strip a{color:#baf7ff;font-weight:bold;}
+
+  footer.bottombar{
+    text-align:center;font-size:11px;color:#003a5c;padding:16px;
+  }
+
+  .audio-toggle{
+    position:fixed;bottom:14px;right:14px;z-index:20;
+    background:linear-gradient(180deg,#8fe0ff,#0a5f96);
+    border:1px solid #0a5f96;border-radius:20px;color:#fff;
+    font-size:12px;font-weight:bold;padding:8px 14px;cursor:pointer;
+    box-shadow:0 3px 8px rgba(0,0,0,0.3);
+  }
+
+  .under-construction{
+    display:inline-block;background:#ffe066;border:1px dashed #cc9900;
+    color:#7a5900;font-size:11px;padding:2px 6px;font-weight:bold;
+    animation:blink 1.4s steps(2,start) infinite;
+  }
+</style>
+</head>
+<body>
+
+<div id="bubbleField"></div>
+
+<header class="topbar">
+  <div class="brand">E1 KIT<small>your all-in-one IRL broadcast rig</small></div>
+  <div class="under-construction">SITE IN BETA — v0.9</div>
+</header>
+
+<marquee behavior="scroll" direction="left" scrollamount="5">
+  *** WELCOME TO E1 KIT — the backpack broadcast unit for IRL streamers *** now shipping worldwide *** 30-day return window *** join 4,000+ streamers on the waitlist *** built by streamers, for streamers ***
+</marquee>
+
+<div class="stage">
+
+  <!-- LOGIN WINDOW -->
+  <div class="login-window">
+    <div class="win-titlebar">
+      <span>E1 Kit Member Login</span>
+      <span class="win-buttons"><span>_</span><span>□</span><span>x</span></span>
+    </div>
+    <div class="win-body">
+      <div style="font-size:40px;">📡</div>
+      <p style="font-size:12px;color:#0b5a8f;margin-top:-4px;">Sign in to manage your kit, track your order, or access the streamer dashboard.</p>
+      <form id="loginForm">
+        <div class="field-row">
+          <label for="user">Username or Email</label>
+          <input type="text" id="user" placeholder="e.g. ep1cLIVE">
+        </div>
+        <div class="field-row">
+          <label for="pass">Password</label>
+          <input type="password" id="pass" placeholder="••••••••">
+        </div>
+        <div class="remember-row">
+          <label><input type="checkbox" checked style="width:auto;"> Remember me on this computer</label>
+        </div>
+        <button type="submit" class="aero-btn">SIGN IN ➜</button>
+      </form>
+      <div class="win-footer-links">
+        <a href="#">Forgot password?</a> &nbsp;|&nbsp; <a href="#">Create a new account <span class="badge-new">NEW</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROMO PANEL -->
+  <div class="promo-panel">
+    <h1>E1 Kit™ Broadcast Backpack</h1>
+    <h2>The clanky little sibling of the big rigs — built for streets, not studios.</h2>
+    <ul class="feature-list">
+      <li>Modular battery-powered encoder unit</li>
+      <li>Dual-cell hot-swap battery bay (6+ hrs runtime)</li>
+      <li>4G/5G bonded cellular failover</li>
+      <li>Weatherproof shell with quick-release mounts</li>
+      <li>Plug-and-play OBS / RTMP profiles</li>
+    </ul>
+    <div class="stat-strip">
+      <div><strong>4,182</strong>waitlist signups</div>
+      <div><strong>6 hrs</strong>battery life</div>
+      <div><strong>128</strong>countries shipped</div>
+    </div>
+    <p style="font-size:12px;">Site visitors today: <span class="visitor-counter" id="counter">000042</span></p>
+  </div>
+
+</div>
+
+<div class="guestbook-strip">
+  ✍️ Sign our <a href="#">Guestbook</a> and tell us where you're streaming from! &nbsp;|&nbsp; 💬 Join the <a href="#">forum</a>
+</div>
+
+<button class="audio-toggle" id="audioToggle">🔊 Play Ambient Theme</button>
+
+<footer class="bottombar">
+  E1 Kit is an independent hobby project and community homage to classic IRL-broadcast gear. Not affiliated with IRLToolkit.<br>
+  Best viewed in 1024×768 or higher. © 2026 E1 Kit.
+</footer>
+
+<script>
+/* bubbles */
+const field = document.getElementById('bubbleField');
+for(let i=0;i<26;i++){
+  const b = document.createElement('div');
+  b.className='bubble';
+  const size = 8 + Math.random()*34;
+  b.style.width = size+'px';
+  b.style.height = size+'px';
+  b.style.left = Math.random()*100+'vw';
+  b.style.animationDuration = (8+Math.random()*10)+'s';
+  b.style.animationDelay = (Math.random()*10)+'s';
+  field.appendChild(b);
+}
+
+/* visitor counter — ticks up like an old hit counter */
+let count = 42;
+const counterEl = document.getElementById('counter');
+setInterval(()=>{
+  count += Math.floor(Math.random()*3);
+  counterEl.textContent = String(count).padStart(6,'0');
+}, 4000);
+
+/* fake login */
+document.getElementById('loginForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  alert('Access granted. Redirecting to your E1 Kit dashboard...');
+});
+
+/* ---- Ambient background theme ----
+   Note: we can't embed a specific copyrighted track in the page.
+   This synthesizes a soft, looping Frutiger-Aero-style ambient pad
+   (glassy sine/triangle chords) using the Web Audio API so the page
+   has *a* background theme out of the box. Swap this block for
+   <audio src="your-licensed-track.mp3" loop> if you have rights to
+   a real track. */
+let audioCtx, playing = false, nodes = [];
+const toggle = document.getElementById('audioToggle');
+
+function startAmbient(){
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const master = audioCtx.createGain();
+  master.gain.value = 0.05;
+  master.connect(audioCtx.destination);
+
+  const chord = [130.81, 164.81, 196.00, 261.63]; // C3 E3 G3 C4 pad
+  chord.forEach((freq, i)=>{
+    const osc = audioCtx.createOscillator();
+    osc.type = i % 2 === 0 ? 'sine' : 'triangle';
+    osc.frequency.value = freq;
+    const gain = audioCtx.createGain();
+    gain.gain.value = 0;
+    osc.connect(gain).connect(master);
+    osc.start();
+
+    const lfo = audioCtx.createOscillator();
+    lfo.frequency.value = 0.05 + i*0.02;
+    const lfoGain = audioCtx.createGain();
+    lfoGain.gain.value = 0.03;
+    lfo.connect(lfoGain).connect(gain.gain);
+    lfo.start();
+
+    gain.gain.setTargetAtTime(0.04, audioCtx.currentTime, 2);
+    nodes.push(osc, lfo);
+  });
+}
+
+toggle.addEventListener('click', ()=>{
+  if(!playing){
+    startAmbient();
+    toggle.textContent = '🔇 Stop Ambient Theme';
+    playing = true;
+  } else {
+    nodes.forEach(n=>n.stop());
+    nodes = [];
+    audioCtx.close();
+    toggle.textContent = '🔊 Play Ambient Theme';
+    playing = false;
+  }
+});
+</script>
+
+</body>
+</html>
